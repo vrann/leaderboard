@@ -1,0 +1,8 @@
+# AWS Account ID
+accountId = # i.e.: "123456789012"
+
+# AWS reguion to deply infrastructure
+myregion = #i.e. "us-east-1"
+
+# GitHub Authorization Key
+gitHubKey = #i.e "2861474c182c120b66666666666666666"

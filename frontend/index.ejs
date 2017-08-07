@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>Magento Partners</title> 
+    </head>
+    <body ng-app="gitStatUI">
+        <header id="nav-main" class="nav-main partners">
+            <div class="container">
+                <div class="nav-logo-subsite partners">
+                    <a href="https://partners.magento.com/portal/">
+                        <span class="logo-main">Magento</span>
+                        <span class="logo-subsite">Partners</span>
+                    </a>
+                    <div class="magento-link-wrapper">
+                        <a class="magento-link" href="https://magento.com/">Go to<br>Magento.com</a>
+                    </div>
+                </div>
+            </div>
+            
+        </header>
+         
+        <!--div class="header" style="background-color:white; border-bottom:1px solid #CCC;">
+            <div class="row">
+                <img src="img/placeholder-resources-header.png">
+                <div class="nav-logo-subsite partners">
+                    <a href="https://partners.magento.com/portal/">
+                        <span class="logo-main">Magento</span>
+                        <span class="logo-subsite">Partners</span>
+                    </a>
+                    <div class="magento-link-wrapper">
+                        <a class="magento-link" href="https://magento.com/">Go to<br>Magento.com</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div-->
+
+<div>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <!--div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">...</div>
+                <div role="tabpanel" class="tab-pane" id="profile">...</div>
+                <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                <div role="tabpanel" class="tab-pane" id="settings">...</div>
+            </div-->
+
+        </div> 
+              
+
+        <div id="container" class="container">
+
+            <div class="well">
+<div class="row-fluid">
+<div class="span12">
+<h3><span class="fa-stack" style="font-size:20px;"><i class="fa fa-circle fa-stack-2x teal"></i> <i class="fa fa-question fa-stack-1x fa-inverse"></i> </span>Contributions</h3>
+
+<p>Contributions from the Community of Magento developers is the foundation of the open source component of the Magento platform. Contributions are the source code patches either with the fixes for the issues or with the new funcitionality delivered to the Magento by external developers (Community or the Partners). Magento is using GitHub for source code version control and GitHub Pull Requests are the best way of delivering fixes to the Magento source code.
+</p>
+</div>
+</div>
+</div>
+
+<div class="well well-border">
+<div class="row-fluid">
+<div class="span12">
+<h3>Partners Teams</h3>
+
+<p>
+            
+            <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+            <div class="field-items">
+                <div class="field-item even" ng-controller="TeamsController">
+                    <table class="table table-hover table-bordered">
+
+                        <thead>
+                            <tr>
+                                <th ng-repeat="label in labelsTeam">{{label}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr ng-repeat="team in teamInfo">
+                                    <td>{{team.name}}</td>
+                                    <td>{{team.membersNumber}}</td>
+                                    <td>{{team.prsNumberTotal}}</td>
+                                    <td>{{team.prsNumberTotal}}</td>
+                                    <td>{{team.prsNumberPartner}}</td>
+                                    <td>{{team.prsNumberOSS}}</td>
+                                    <td>
+                                        <div ng-repeat="complexityLabel in team.complexity"><span class="labels"><p class="label" style="background-color: #{{complexityLabel.color}}; color: #fff;" title="Label: {{complexityLabel.name}}">{{complexityLabel.name}}: {{complexityLabel.count}}</p></span>
+                                    </td>
+                                    <td>
+                                        <div ng-repeat="achievemntLabel in team.achievement"><span class="labels"><p class="label" style="background-color: #{{achievemntLabel.color}}; color: #fff;" title="Label: {{achievemntLabel.name}}">{{achievemntLabel.name}}: {{achievemntLabel.count}}</p></span></div>
+                                    </td>
+                                    <td>
+                                        <div ng-repeat="categoryLabel in team.expertise"><span class="labels"><p class="label" style="background-color: #{{categoryLabel.color}}; color: #fff;" title="Label: {{categoryLabel.name}}">{{categoryLabel.name}}: {{categoryLabel.count}}</p></span></div>
+                                    </td>
+                                    <td>{{team.points}}</td>
+                                </tr>
+                            <!--tr ng-repeat="dataSet in dataTeam">
+                                <!--td>
+                                    <span style="text-align: right;">{{seriesTeam[$index]}}</span>
+                                </td-->
+                                <!--td ng-repeat="set in dataSet track by $index" let-item="dataTeam[$parent.$index][$index]">{{item}}
+                                    
+                                </td>
+                                <td><span class="labels"><p class="label" style="background-color: #f9d0c4; color: #332a28;" title="Label: advanced">advanced</p></span>
+                                </td>
+                                <td><a>Table Link</a></td>
+                            </tr>
+                            <!--tr class="selected">
+                                <td class="text-center"><input checked="checked" type="checkbox"></td>
+                                <td>Table Cell</td>
+                                <td>Table Cell</td>
+                                <td>Table Cell</td>
+                                <td>Table Cell</td>
+                                <td><a>Table Link</a></td>
+                            </tr-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+ </p>
+</div>
+</div>
+</div>       
+            <!--section id="reactive">
+                <div class="page-header">
+                    <h1>Statistic of the Public Pull Requests</h1>
+                    <p>Statistic is monitored on the daily basis.</p>
+                </div>
+                <div class="row" ng-controller="OMCcontroller">
+                    <input type="hidden" name="currentInterval" value="{{currentInterval}}" />
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Open/Merged/Closed PRs per {{currentInterval}}</div>
+                            <div class="panel-body">
+                            <canvas id="tables" class="chart chart-bar" chart-data="data" chart-options="options"
+                                    chart-labels="labels" chart-series="series" chart-colors="colors"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Pull Request statistic.</div>
+                            <div class="panel-body">
+                            <table class="table table-responsive table-condensed table-striped">
+                                <tr>
+                                    <th />
+                                <th ng-repeat="label in labels">{{label}}</th>
+                                </tr>
+                                <tr ng-repeat="dataSet in data">
+                                    <td>
+                                        <span style="text-align: right;">{{series[$index]}}</span>
+                                    </td>    
+                                    <td ng-repeat="set in dataSet track by $index"><span style="text-align: right;">{{data[$parent.$index][$index]}}</span></td>
+                                </tr>
+                            </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <div class="row" ng-controller="ContributorsController">
+                <div class="col-lg-6 col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Top 3 Contributors per Month</div>
+                        <div class="panel-body">
+                            <canvas class="chart chart-bar" chart-data="dataContributors" chart-labels="labelsContributors"
+                                    chart-options="optionsContributors" chart-series="seriesContributors" chart="Contributors"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div!-->
+
+            <!--div class="row" ng-controller="TeamsController">
+                <div class="col-lg-6 col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Pull Request statistic.</div>
+                        <div class="panel-body">
+                            <table class="table table-responsive table-condensed table-striped">
+                                <tr>
+                                    <th ng-repeat="label in labelsTeam">{{label}}</th>
+                                </tr>
+                                <tr ng-repeat="dataSet in dataTeam">
+                                    <!--td>
+                                        <span style="text-align: right;">{{seriesTeam[$index]}}</span>
+                                    </td-->    
+                                    <!--td ng-repeat="set in dataSet track by $index"><span style="text-align: right;">{{dataTeam[$parent.$index][$index]}}</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div-->
+        </div>
+    </body>
+</html>

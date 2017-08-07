@@ -1,0 +1,2 @@
+curl -X PUT -H 'Content-Type:application/json' -d '{"properties": {"user.login": {"type": "text", "fielddata": true}}}}' 127.0.0.1:9200/github-prs/_mapping/github-pr
+# curl -X PUT -H 'Content-Type:application/json' -d '{"properties": {"base.repo.full_name": {"type": "keyword", "fielddata": true}}}}' 127.0.0.1:9200/github-prs/_mapping/github-pr
