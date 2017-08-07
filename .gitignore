@@ -8,3 +8,5 @@ deployment/terraform.tfvars
 deployment/.terraform.tfstate.lock.info
 deployment/.terraform.tfstate
 deployment/.terraform.tfstate.backup
+deployment/terraform.tfstate
+deployment/terraform.tfstate.backup
