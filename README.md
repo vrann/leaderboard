@@ -30,6 +30,10 @@ Separate Lambda ProcessSQSQueue (see backend/index.js, exports.scheduleBatchJobs
 
 ## Deployment
 
+Deployment is implemented using Infrastructure as Code (IAC) approach using Terraform ![](https://chocolatey.org/content/packageimages/terraform.0.9.6.png)
+
+For the deployment scripts see `/deployment`
+
 ### 1. Build Artifacts
 ```
 cd deployment
