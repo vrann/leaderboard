@@ -204,31 +204,31 @@ function githubElasticAdapter (index, connection) {
             })
         },
         loadTeams: function(handler) {
-            connection.search({
-                index: 'github-prs',
-                //_source: true,
-                body: {
-                    "query":
-                    {
-                        //match_all: {}
-                        "term" : { "state" : "closed" }
-                    }
-                }
-            }).then(function(response) {
-                // console.log({
-                //     index: 'github-prs',
-                //     _source: true,
-                //     body: {
-                //         "query":
-                //         {
-                //             "term" : { "status" : "closed" }
-                //         }
-                //     }
-                // })
-                console.log(response)
-            }).catch(function(e) {
-                console.log(e)
-            });
+            // connection.search({
+            //     index: 'github-prs',
+            //     //_source: true,
+            //     body: {
+            //         "query":
+            //         {
+            //             //match_all: {}
+            //             "term" : { "state" : "closed" }
+            //         }
+            //     }
+            // }).then(function(response) {
+            //     // console.log({
+            //     //     index: 'github-prs',
+            //     //     _source: true,
+            //     //     body: {
+            //     //         "query":
+            //     //         {
+            //     //             "term" : { "status" : "closed" }
+            //     //         }
+            //     //     }
+            //     // })
+            //     console.log(response)
+            // }).catch(function(e) {
+            //     console.log(e)
+            // });
 
             scrollingSearch(
                 connection, 
@@ -308,6 +308,7 @@ function githubElasticAdapter (index, connection) {
                         connection, 
                         {
                             index: 'github-prs-metadata',
+                            size: 1000,
                             body: {
                                 "query":
                                 {

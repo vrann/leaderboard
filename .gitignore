@@ -1,6 +1,7 @@
 .DS_Store
 artifacts/*
 backend/node_modules/*
+!backend/node_modules/gitHubEs
 frontend/node_modules/*
 frontend/dist/*
 backend/Dockerfile.zip

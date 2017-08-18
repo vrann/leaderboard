@@ -21,7 +21,6 @@ var AWS = require('aws-sdk');
     }
 })();
 
-
 exports.syncTeams = function(event, context, callback) {
     console.log("Start");
     var elasticsearchEndpoint = process.env.ES_ENDPOINT;  
@@ -96,7 +95,7 @@ exports.synchronizeTeams = function(event, context, callback) {
 
 exports.synchronizePrs = function(event, context, callback) {
     var elasticsearchEndpoint = process.env.ES_ENDPOINT; //"127.0.0.1:9200" 
-    var gitHubToken = process.env.GIT_HUB_KEY; //"2861474c182c120b47503373e12db014133de701"
+    var gitHubToken = process.env.GIT_HUB_KEY; //""
     var writer = esGithubWriter(gitHubToken, elasticsearchEndpoint)
     var repoRequest = {
         owner: 'magento',
@@ -143,7 +142,7 @@ exports.synchronizePrs = function(event, context, callback) {
 
 exports.scheduleBatchJobs = function(event, context, callback) {
     var elasticsearchEndpoint = process.env.ES_ENDPOINT; //"127.0.0.1:9200" 
-    var gitHubToken = process.env.GIT_HUB_KEY; //"2861474c182c120b47503373e12db014133de701"
+    var gitHubToken = process.env.GIT_HUB_KEY; //""
     var awsRegion = process.env.QUEUE_AWS_REGION; //"us-east-1"  
     var queueUrl = process.env.QUEUE_URL; //"http://sqs.us-east-1.amazonaws.com/417782006694/batch-ecs-queue"
     var ecsCluster = process.env.ECS_CLUSTER; //"GithubBatchCluster"

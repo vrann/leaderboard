@@ -60,6 +60,16 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
+resource "aws_s3_bucket" "partners-magento-com" {
+  bucket = "partners.magento.com"
+  acl    = "public-read"
+
+  website {
+    index_document = "index.html"
+    error_document = "error.html"
+  }
+}
+
 resource "aws_s3_bucket" "magento-partners-artifacts" {
     bucket = "magento-partners-artifacts"
     acl = "private"
@@ -87,6 +97,7 @@ resource "aws_lambda_function" "GitHubWebhook" {
   handler           = "github-elastic.acceptWebHook"
   source_code_hash  = "${base64sha256(file("../artifacts/github-elastic.zip"))}"
   runtime           = "nodejs6.10"
+  timeout           = 300
 
   environment {
     variables = {
@@ -126,6 +137,7 @@ resource "aws_lambda_function" "CheckDataIntegrity" {
   handler          = "github-elastic.checkIntegrity"
   source_code_hash = "${base64sha256(file("../artifacts/github-elastic.zip"))}"
   runtime          = "nodejs6.10"
+  timeout          = 300
 
   environment {
     variables = {
@@ -167,6 +179,7 @@ resource "aws_lambda_function" "ProcessSQSQueue" {
   handler          = "github-elastic.scheduleBatchJobs"
   source_code_hash = "${base64sha256(file("../artifacts/github-elastic.zip"))}"
   runtime          = "nodejs6.10"
+  timeout          = 300
 
   environment {
     variables = {
