@@ -1,4 +1,4 @@
-# Partenrs Statistic Platform
+# Partners Statistic Platform
 
 ## Architecture
 
