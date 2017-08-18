@@ -36,6 +36,10 @@ Deployment is implemented using Infrastructure as Code (IAC) approach using Terr
 
 For the deployment scripts see `/deployment`
 
+### 0. Configure Keys
+
+Copy `deployment/terraform.tfvars.dist` to the `deployment/terraform.tfvars` and update it with correct account id, region and GitHub token
+
 ### 1. Build Artifacts
 ```
 cd deployment
