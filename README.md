@@ -53,8 +53,10 @@ terraform apply
 ```
 
 Save output of the command:
+```
 aws_ecr_repository = 417782006694.dkr.ecr.us-east-1.amazonaws.com/github-batch-repo
 webhook_invoke_url = https://xhs658ppag.execute-api.us-east-1.amazonaws.com/production
+```
 
 ### 4. Build and deploy container image
 ```
