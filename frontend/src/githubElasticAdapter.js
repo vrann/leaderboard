@@ -49,7 +49,7 @@ function githubElasticAdapter (index, connection) {
 
     return {
         loadPullRequests: function (handler, interval, intervalValue) {
-            console.log(interval);
+            //console.log(interval);
             var aggregateInterval = "month";
             var aggregateFormat = "yyyy-MM";
             var filter = {"match_all":{}};
@@ -234,6 +234,7 @@ function githubElasticAdapter (index, connection) {
                 connection, 
                 {
                     index: index,
+                    size: 1000,
                     body: {
                         "query":
                         {
@@ -255,21 +256,22 @@ function githubElasticAdapter (index, connection) {
             );
 
             function processTeams(items, data) {
-                teamIds = []
                 membersToLoad = []
                 var teams = items.reduce(function(teamsStorage, team) {
-                    team.membersData = [];
+                    team.membersData = {};
                     membersToLoad = membersToLoad.concat(team.members);
-                    console.log(membersToLoad, team.members);
+                    //console.log(membersToLoad, team.members);
                     team.prs = [];
                     teamsStorage[team.id] = team
                     return teamsStorage
                 }, {})
 
+                console.log(membersToLoad);
                 members = scrollingSearch(
                     connection, 
                     {
                         index: 'github-members',
+                        size: 1000,
                         body: {
                             "query":
                             {
@@ -287,10 +289,10 @@ function githubElasticAdapter (index, connection) {
                     var prsToTeamsMap = {};
                     membersResponse.map(function(member) {
                         memberTeams = []
-                        console.log(member.id, member.prs);
+                        //console.log(member.id, member.prs);
                         member.teams.map(function(team) {
                             if (teams.hasOwnProperty(team.id)) {
-                                teams[team.id].membersData.push(member);
+                                teams[team.id].membersData[member.id] = member;
                                 memberTeams.push(team.id);
                             } else {
                                 console.log("No such team " + team.id);
@@ -302,8 +304,9 @@ function githubElasticAdapter (index, connection) {
                             prsToLoad.push(prId)
                         });
                     });
-                    console.log(prsToTeamsMap);
+                    //console.log(prsToTeamsMap);
 
+                    console.log(prsToLoad);
                     members = scrollingSearch(
                         connection, 
                         {
@@ -329,11 +332,31 @@ function githubElasticAdapter (index, connection) {
                         items.map(function(pr) {
                             data.prsToTeamsMap[pr.id].map(function(teamId) {
                                 data.teams[teamId].prs.push(pr);
+                                addPrToObject(data.teams[teamId].membersData[pr.user_id], pr)
+                                addPrToObject(data.teams[teamId], pr)
                             })
                         })
 
                         console.log(teams);
                         handler(teams);
+                    }
+
+                    function addPrToObject(object, pr) {
+                        if (!object.hasOwnProperty('commercePRs')) {
+                            object.commercePRs = []
+                        }
+                        if (!object.hasOwnProperty('ossPRs')) {
+                            object.ossPRs = []
+                        }
+                        switch (pr.baseOrganisation) {
+                            case 'magento-partners':
+                                object.commercePRs.push(pr)
+                                break;
+                            case 'magento':
+                            default:
+                                object.ossPRs.push(pr)
+                                break;
+                        }
                     }
                 }
             }

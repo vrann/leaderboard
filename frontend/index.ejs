@@ -88,43 +88,57 @@
                             </tr>
                         </thead>
                         <tbody>
-                                <tr ng-repeat="team in teamInfo">
-                                    <td>{{team.name}}</td>
+                                <tr ng-repeat="team in teamInfo" >
+                                    <td><h4><a href="#" data-toggle="modal" data-target="#myModal-{{team.id}}">{{team.name}}</a></h4>
+                                        <div class="modal fade" id="myModal-{{team.id}}" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button class="close" data-dismiss="modal" type="button"><i class="fa fa-times"></i></button>
+                                                <h4 class="modal-title">Team {{team.name}} Pull Requests</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                    <table>
+                                                        <tr ng-repeat="member in team.membersData">
+                                                            <td><a href="https://github.com/{{member.url}}">{{member.login}}<br /><img width="50px" src="{{member.avatar_url}}"></a></td>
+                                                            <td>
+                                                                <p>
+                                                                <h5>Open:</h5>
+                                                                    <div ng-repeat="pr in member.opened"><a href="https://github.com/{{pr.baseOrganisation}}/{{pr.baseRepo}}/pull/{{pr.number}}">{{pr.baseOrganisation}}/{{pr.baseRepo}}#{{pr.number}}</a></div>
+                                                                </p><p>
+                                                                <h5>Closed:</h5>
+                                                                    <div ng-repeat="pr in member.closed"><a href="https://github.com/{{pr.baseOrganisation}}/{{pr.baseRepo}}/pull/{{pr.number}}">{{pr.baseOrganisation}}/{{pr.baseRepo}}#{{pr.number}}</a></div>
+                                                                </p><p>
+                                                                <h5>Merged:</h5>
+                                                                    <div ng-repeat="pr in member.merged"><a  href="https://github.com/{{pr.baseOrganisation}}/{{pr.baseRepo}}/pull/{{pr.number}}">{{pr.baseOrganisation}}/{{pr.baseRepo}}#{{pr.number}}</a></div>
+                                                                </p>    
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer"><button class="mage-btn btn btn-default" data-dismiss="modal" type="button">Close</button></div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+                                    </td>
                                     <td>{{team.membersNumber}}</td>
                                     <td>{{team.prsNumberTotal}}</td>
-                                    <td>{{team.prsNumberTotal}}</td>
+                                    <td>{{team.prsNumberAccepted}}</td>
                                     <td>{{team.prsNumberPartner}}</td>
                                     <td>{{team.prsNumberOSS}}</td>
+                                    <!--td>                                        
+                                    </td>
                                     <td>
-                                        <div ng-repeat="complexityLabel in team.complexity"><span class="labels"><p class="label" style="background-color: #{{complexityLabel.color}}; color: #fff;" title="Label: {{complexityLabel.name}}">{{complexityLabel.name}}: {{complexityLabel.count}}</p></span>
+                                        <div ng-repeat="complexityLabel in team.complexity"><span class="labels"><p class="label" style="background-color: #{{complexityLabel.color}}; color: #fff;" title="Label: {{complexityLabel.name}}">{{complexityLabel.name}}: {{complexityLabel.count}}</p></span></div>
                                     </td>
                                     <td>
                                         <div ng-repeat="achievemntLabel in team.achievement"><span class="labels"><p class="label" style="background-color: #{{achievemntLabel.color}}; color: #fff;" title="Label: {{achievemntLabel.name}}">{{achievemntLabel.name}}: {{achievemntLabel.count}}</p></span></div>
                                     </td>
                                     <td>
                                         <div ng-repeat="categoryLabel in team.expertise"><span class="labels"><p class="label" style="background-color: #{{categoryLabel.color}}; color: #fff;" title="Label: {{categoryLabel.name}}">{{categoryLabel.name}}: {{categoryLabel.count}}</p></span></div>
-                                    </td>
+                                    </td-->
                                     <td>{{team.points}}</td>
                                 </tr>
-                            <!--tr ng-repeat="dataSet in dataTeam">
-                                <!--td>
-                                    <span style="text-align: right;">{{seriesTeam[$index]}}</span>
-                                </td-->
-                                <!--td ng-repeat="set in dataSet track by $index" let-item="dataTeam[$parent.$index][$index]">{{item}}
-                                    
-                                </td>
-                                <td><span class="labels"><p class="label" style="background-color: #f9d0c4; color: #332a28;" title="Label: advanced">advanced</p></span>
-                                </td>
-                                <td><a>Table Link</a></td>
-                            </tr>
-                            <!--tr class="selected">
-                                <td class="text-center"><input checked="checked" type="checkbox"></td>
-                                <td>Table Cell</td>
-                                <td>Table Cell</td>
-                                <td>Table Cell</td>
-                                <td>Table Cell</td>
-                                <td><a>Table Link</a></td>
-                            </tr-->
                         </tbody>
                     </table>
                 </div>

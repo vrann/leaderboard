@@ -44,8 +44,8 @@ function ElasticToChartsMapper($scope, alias, clickHandler) {
                     }
                 }
                 var cutData = cut(chartData, 8);
-                console.log(chartData.opened.slice(1));
-                console.log(cutData);
+                //console.log(chartData.opened.slice(1));
+                //console.log(cutData);
                 
                 cutData.labels.map(function(a) {
                     if (a in community) {
@@ -70,7 +70,7 @@ function ElasticToChartsMapper($scope, alias, clickHandler) {
                     tooltips: {
                         callbacks: {
                             beforeLabel: function(tooltipItem, data) {
-                                console.log(data);
+                                //console.log(data);
                                 //console.log(tooltipItem);
                                 return contributors[tooltipItem.xLabel][tooltipItem.datasetIndex];
                             }
@@ -117,7 +117,7 @@ function ElasticToChartsMapper($scope, alias, clickHandler) {
                 $scope['labels'+alias] = cutData.labels
                 $scope['data'+alias] = [cutData.top0, cutData.top1, cutData.top2];
 
-                console.log($scope);
+                //console.log($scope);
             })    
         },
         teamsMapper: function(teamsData) {
@@ -128,8 +128,10 @@ function ElasticToChartsMapper($scope, alias, clickHandler) {
                 var teams = [];
                 Object.keys(teamsData).map(function(key, index) {
                     team = teamsData[key];
-                    
+                    //console.log(team)
                     info = {
+                        id: team.id,
+                        teamPRs: [],
                         name: team.name,
                         membersNumber: team.membersData.length,
                         prsNumberTotal: team.prs.length,
@@ -157,6 +159,15 @@ function ElasticToChartsMapper($scope, alias, clickHandler) {
                     }
 
                     team.prs.map(function(pr) {
+                        //console.log(pr)
+                        info.teamPRs.push(
+                            {
+                                number: pr.baseOrganisation + '/' + pr.baseRepo + '#' + pr.number,
+                                uri: pr.baseOrganisation + '/' + pr.baseRepo + '/pull/' + pr.number,
+                                authorName: team.membersData[pr.user_id].login,
+                                authorImg: team.membersData[pr.user_id].avatar_url
+                            }
+                        )
                         switch (pr.baseOrganisation) {
                             case 'magento-partners':
                                 info.prsNumberPartner++;
@@ -170,7 +181,7 @@ function ElasticToChartsMapper($scope, alias, clickHandler) {
                                 info.points = info.points+5;
                                 break;
                         }
-                        console.log(pr);
+                        //console.log(pr);
                         if (pr.labels) {
                             pr.labels.map(function(label) {
                                 if ((keyIndex = Object.keys(labelGroups).findIndex(
@@ -197,12 +208,12 @@ function ElasticToChartsMapper($scope, alias, clickHandler) {
                 //     data.push([name, 0, 0]);
                 // })
 
-                $scope['series'+alias] = series;
-                $scope['labels'+alias] = ["Team Name", "Members", "PRs Opened", "PRs Accepted", "PRs Partners", "PRs Open Source", "Complexity", "Special Achievements", "Category", "Total Points"]
-                $scope['data'+alias] = data;
+                //$scope['series'+alias] = series;
+                $scope['labels'+alias] = ["Team Name", "Members", "PRs Opened", "PRs Accepted", "PRs Partners", "PRs Open Source", "PRs Numbers", "Complexity", "Special Achievements", "Category", "Total Points"]
+                //$scope['data'+alias] = data;
                 $scope['teamInfo'] = teamInfo;
                 
-                console.log($scope['teamInfo']);
+                //  console.log($scope['teamInfo']);
             })
         }   
     }

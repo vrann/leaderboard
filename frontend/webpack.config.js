@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var HtmlWebpackIncludeAssetsPlugin = require('html-webpack-include-assets-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -24,6 +25,10 @@ var webpackConfig = {
       }
     },
     plugins: [
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery"
+      }),
       new ExtractTextPlugin('css/styles.css'),
       new CopyWebpackPlugin([
           //{ from: 'node_modules/bootstrap/dist/css', to: 'css/'},

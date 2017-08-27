@@ -1,0 +1,125 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/opt/local/bin/node',
+1 verbose cli   '/opt/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '--save-dev',
+1 verbose cli   'webpack-provide-plugin' ]
+2 info using npm@2.15.11
+3 info using node@v4.6.1
+4 verbose install initial load of /Users/etulika/Projects/php/partners-statisic/frontend/package.json
+5 warn package.json stat-ui@1.0.0 No description
+6 warn package.json stat-ui@1.0.0 No repository field.
+7 warn package.json stat-ui@1.0.0 No README data
+8 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/angular/package.json
+9 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/angular-bootstrap/package.json
+10 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/angular-chart.js/package.json
+11 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/angular-ui-bootstrap/package.json
+12 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/angular-ui-router/package.json
+13 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/bootstrap/package.json
+14 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/chart.js/package.json
+15 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/copy-webpack-plugin/package.json
+16 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/css-loader/package.json
+17 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/elasticsearch/package.json
+18 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/elasticsearch-browser/package.json
+19 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/extract-text-webpack-plugin/package.json
+20 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/file-loader/package.json
+21 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/githubStatUI/package.json
+22 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/html-webpack-include-assets-plugin/package.json
+23 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/html-webpack-plugin/package.json
+24 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/jquery/package.json
+25 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/less/package.json
+26 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/less-loader/package.json
+27 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/style-loader/package.json
+28 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/ui-bootstrap/package.json
+29 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/ui-router-extras/package.json
+30 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/url-loader/package.json
+31 verbose installManyTop reading scoped package data from /Users/etulika/Projects/php/partners-statisic/frontend/node_modules/webpack/package.json
+32 info package.json copy-webpack-plugin@4.0.1 No README data
+33 info package.json elasticsearch-browser@12.1.3 license should be a valid SPDX license expression
+34 info package.json ui-router-extras@0.1.3 No repository field.
+35 verbose readDependencies loading dependencies from /Users/etulika/Projects/php/partners-statisic/frontend/package.json
+36 silly cache add args [ 'webpack-provide-plugin', null ]
+37 verbose cache add spec webpack-provide-plugin
+38 silly cache add parsed spec Result {
+38 silly cache add   raw: 'webpack-provide-plugin',
+38 silly cache add   scope: null,
+38 silly cache add   name: 'webpack-provide-plugin',
+38 silly cache add   rawSpec: '',
+38 silly cache add   spec: 'latest',
+38 silly cache add   type: 'tag' }
+39 silly addNamed webpack-provide-plugin@latest
+40 verbose addNamed "latest" is being treated as a dist-tag for webpack-provide-plugin
+41 info addNameTag [ 'webpack-provide-plugin', 'latest' ]
+42 silly mapToRegistry name webpack-provide-plugin
+43 silly mapToRegistry using default registry
+44 silly mapToRegistry registry https://registry.npmjs.org/
+45 silly mapToRegistry data Result {
+45 silly mapToRegistry   raw: 'webpack-provide-plugin',
+45 silly mapToRegistry   scope: null,
+45 silly mapToRegistry   name: 'webpack-provide-plugin',
+45 silly mapToRegistry   rawSpec: '',
+45 silly mapToRegistry   spec: 'latest',
+45 silly mapToRegistry   type: 'tag' }
+46 silly mapToRegistry uri https://registry.npmjs.org/webpack-provide-plugin
+47 verbose addNameTag registry:https://registry.npmjs.org/webpack-provide-plugin not in flight; fetching
+48 verbose request uri https://registry.npmjs.org/webpack-provide-plugin
+49 verbose request no auth needed
+50 info attempt registry request try #1 at 9:39:31 AM
+51 verbose request id c00ef57a746f7275
+52 http request GET https://registry.npmjs.org/webpack-provide-plugin
+53 http 404 https://registry.npmjs.org/webpack-provide-plugin
+54 verbose headers { 'content-type': 'application/json',
+54 verbose headers   'cache-control': 'max-age=0',
+54 verbose headers   'content-length': '2',
+54 verbose headers   'accept-ranges': 'bytes',
+54 verbose headers   date: 'Sun, 27 Aug 2017 14:39:31 GMT',
+54 verbose headers   via: '1.1 varnish',
+54 verbose headers   age: '0',
+54 verbose headers   connection: 'keep-alive',
+54 verbose headers   'x-served-by': 'cache-dfw1826-DFW',
+54 verbose headers   'x-cache': 'MISS',
+54 verbose headers   'x-cache-hits': '0',
+54 verbose headers   'x-timer': 'S1503844772.602899,VS0,VE397',
+54 verbose headers   vary: 'Accept-Encoding' }
+55 silly get cb [ 404,
+55 silly get   { 'content-type': 'application/json',
+55 silly get     'cache-control': 'max-age=0',
+55 silly get     'content-length': '2',
+55 silly get     'accept-ranges': 'bytes',
+55 silly get     date: 'Sun, 27 Aug 2017 14:39:31 GMT',
+55 silly get     via: '1.1 varnish',
+55 silly get     age: '0',
+55 silly get     connection: 'keep-alive',
+55 silly get     'x-served-by': 'cache-dfw1826-DFW',
+55 silly get     'x-cache': 'MISS',
+55 silly get     'x-cache-hits': '0',
+55 silly get     'x-timer': 'S1503844772.602899,VS0,VE397',
+55 silly get     vary: 'Accept-Encoding' } ]
+56 verbose stack Error: Registry returned 404 for GET on https://registry.npmjs.org/webpack-provide-plugin
+56 verbose stack     at makeError (/opt/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+56 verbose stack     at CachingRegistryClient.<anonymous> (/opt/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:280:14)
+56 verbose stack     at Request._callback (/opt/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+56 verbose stack     at Request.self.callback (/opt/local/lib/node_modules/npm/node_modules/request/request.js:187:22)
+56 verbose stack     at emitTwo (events.js:87:13)
+56 verbose stack     at Request.emit (events.js:172:7)
+56 verbose stack     at Request.<anonymous> (/opt/local/lib/node_modules/npm/node_modules/request/request.js:1044:10)
+56 verbose stack     at emitOne (events.js:77:13)
+56 verbose stack     at Request.emit (events.js:169:7)
+56 verbose stack     at IncomingMessage.<anonymous> (/opt/local/lib/node_modules/npm/node_modules/request/request.js:965:12)
+57 verbose statusCode 404
+58 verbose pkgid webpack-provide-plugin
+59 verbose cwd /Users/etulika/Projects/php/partners-statisic/frontend
+60 error Darwin 15.5.0
+61 error argv "/opt/local/bin/node" "/opt/local/bin/npm" "install" "--save-dev" "webpack-provide-plugin"
+62 error node v4.6.1
+63 error npm  v2.15.11
+64 error code E404
+65 error 404 Registry returned 404 for GET on https://registry.npmjs.org/webpack-provide-plugin
+65 error 404
+65 error 404 'webpack-provide-plugin' is not in the npm registry.
+65 error 404 You should bug the author to publish it (or use the name yourself!)
+65 error 404 It was specified as a dependency of 'stat-ui'
+65 error 404
+65 error 404 Note that you can also install from a
+65 error 404 tarball, folder, http url, or git url.
+66 verbose exit [ 1, true ]

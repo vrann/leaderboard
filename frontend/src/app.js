@@ -8,13 +8,26 @@ import elasticsearch from 'elasticsearch-browser';
 import 'angular-ui-bootstrap';
 import ElasticToChartsMapper from './map-elastic-to-chart.js'
 import esFactory from './githubElasticAdapter.js'
-import "bootstrap/dist/css/bootstrap.min.css"
+//import 'jquery'
+//import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap"
+import "bootstrap/less/bootstrap.less"
 import "./../less/typography.less"
 import "./../less/universal.less"
 import "./../less/partners.less"
+//import "bootstrap/js/modal.js"
+
+import teamsLoaderFactory from "./teamsLoader.js"
+import teamsRendererFactory from "./teamsRenderer.js"
+
 
 'use strict';
 var app = angular.module('gitStatUI', ['chart.js', 'ui.bootstrap']);
+var esEndpoint = 'http://127.0.0.1:9200/'
+//var esEndpoint = 'https://search-magento-partners-kxrre3hdvezhngpgs7myrcmr7a.us-east-1.es.amazonaws.com'
+
+
+
 
 
 app.config(function (ChartJsProvider) {
@@ -53,7 +66,7 @@ app.directive('teamElement', function () {
 });    
 
 app.controller('OMCcontroller', ['$scope', function ($scope) {
-    var esAdapter = esFactory('http://127.0.0.1:9200/', 'github-prs');
+    var esAdapter = esFactory(esEndpoint, 'github-prs');
     $scope.currentInterval = 'month';
     $scope.intervalValue = '';
     var clickHandler = function(event, chartData) {
@@ -76,11 +89,15 @@ app.controller('OMCcontroller', ['$scope', function ($scope) {
 }]);
 
 app.controller('ContributorsController', ['$scope', function ($scope) {
-    var esAdapter = esFactory('http://127.0.0.1:9200/', 'github-prs');
+    var esAdapter = esFactory(esEndpoint, 'github-prs');
     esAdapter.loadContributors(ElasticToChartsMapper($scope, 'Contributors', console.log).contributorsMapper);  
 }]);
 
 app.controller('TeamsController', ['$scope', function ($scope) {
-    var esAdapter = esFactory('https://search-magento-partners-kxrre3hdvezhngpgs7myrcmr7a.us-east-1.es.amazonaws.com', 'github-teams');
-    esAdapter.loadTeams(ElasticToChartsMapper($scope, 'Team', console.log).teamsMapper);
+    teamsLoaderFactory(esEndpoint).getTeams().then(result => {
+        //console.log(result)
+        teamsRendererFactory($scope).renderTeams(result)
+    })
+    //var esAdapter = esFactory(esEndpoint, 'github-teams');
+    //esAdapter.loadTeams(ElasticToChartsMapper($scope, 'Team', console.log).teamsMapper);
 }]);
