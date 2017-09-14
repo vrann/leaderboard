@@ -150,6 +150,46 @@ resource "aws_lambda_function" "CheckDataIntegrity" {
 }
 
 /**
+ * Publish Results To S3
+ */
+resource "aws_cloudwatch_event_rule" "publishResultsS3Timer" {
+  name        = "publishResultsS3"
+  description = "Trigger Publishing Results to S3 every 5 min"
+  schedule_expression = "rate(5 minutes)"
+}
+
+resource "aws_cloudwatch_event_target" "publishResultsS3Action" {
+  rule      = "${aws_cloudwatch_event_rule.publishResultsS3Timer.name}"
+  target_id = "runPublishResultsS3Lambda"
+  arn       = "${aws_lambda_function.publishResultsS3.arn}"
+}
+
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_publishResultsS3" {
+    statement_id = "AllowExecutionFromCloudWatch"
+    action = "lambda:InvokeFunction"
+    function_name = "${aws_lambda_function.publishResultsS3.function_name}"
+    principal = "events.amazonaws.com"
+    source_arn = "${aws_cloudwatch_event_rule.publishResultsS3Timer.arn}"
+}
+
+resource "aws_lambda_function" "publishResultsS3" {
+  filename         = "../artifacts/github-elastic.zip"
+  function_name    = "publishResultsS3"
+  role             = "${aws_iam_role.iam_for_lambda.arn}"
+  handler          = "github-elastic.publishStatistic"
+  source_code_hash = "${base64sha256(file("../artifacts/github-elastic.zip"))}"
+  runtime          = "nodejs6.10"
+  timeout          = 300
+
+  environment {
+    variables = {
+      ES_ENDPOINT = "${aws_elasticsearch_domain.es.endpoint}"
+      GIT_HUB_KEY = "${var.gitHubKey}"
+    }
+  }
+}
+
+/**
  * Check SQS queue every 5 min and schedule ECS tasks
  */
 resource "aws_cloudwatch_event_rule" "processSQSTimer" {

@@ -9,7 +9,7 @@ var testMessages = {
   'x-hub-signature': 'sha1=f4b6221165d2b321ca40aae1adee25bd092f250e',
   'content-length': '20268',
   'x-forwarded-for': '192.30.252.45' },
-  body :{ action: 'opened',
+  body: { action: 'opened',
   number: 5,
   pull_request:
    { url: 'https://api.github.com/repos/vrann/pull-requests-cli/pulls/5',
@@ -820,7 +820,8 @@ body: { action: 'labeled',
      type: 'User',
      site_admin: false } }
 },
-    labeled2:{
+
+labeled2: {
   headers: { host: 'a51fbef7.ngrok.io',
   accept: '*/*',
   'user-agent': 'GitHub-Hookshot/a17c5c2',
@@ -1034,7 +1035,7 @@ body: { action: 'labeled',
 },
 
 
-labeled2:{
+labeled3:{
   headers: { host: 'a51fbef7.ngrok.io',
   accept: '*/*',
   'user-agent': 'GitHub-Hookshot/a17c5c2',
@@ -1247,7 +1248,16 @@ body: { action: 'labeled',
      site_admin: false } }
 },
 
-updated: { action: 'edited',
+updated: {
+  headers: { host: 'a51fbef7.ngrok.io',
+  accept: '*/*',
+  'user-agent': 'GitHub-Hookshot/a17c5c2',
+  'x-github-event': 'pull_request',
+  'x-github-delivery': '5e82f810-6bdf-11e7-8730-7a11141865f1',
+  'content-type': 'application/json',
+  'content-length': '20087',
+  'x-forwarded-for': '192.30.252.42' },
+body:{ action: 'edited',
   number: 5,
   pull_request:
    { url: 'https://api.github.com/repos/vrann/pull-requests-cli/pulls/5',
@@ -1433,7 +1443,18 @@ updated: { action: 'edited',
      type: 'User',
      site_admin: false } },
 
-synchronized: { action: 'synchronize',
+   }, 
+   
+synchronized: {
+  headers: { host: 'a51fbef7.ngrok.io',
+  accept: '*/*',
+  'user-agent': 'GitHub-Hookshot/a17c5c2',
+  'x-github-event': 'pull_request',
+  'x-github-delivery': '5e82f810-6bdf-11e7-8730-7a11141865f1',
+  'content-type': 'application/json',
+  'content-length': '20087',
+  'x-forwarded-for': '192.30.252.42' },
+body:{ action: 'synchronize',
   number: 5,
   pull_request:
    { url: 'https://api.github.com/repos/vrann/pull-requests-cli/pulls/5',
@@ -1618,8 +1639,17 @@ synchronized: { action: 'synchronize',
      events_url: 'https://api.github.com/users/vrann/events{/privacy}',
      received_events_url: 'https://api.github.com/users/vrann/received_events',
      type: 'User',
-     site_admin: false } },
-closed: { action: 'closed',
+     site_admin: false } }},
+closed: {
+  headers: { host: 'a51fbef7.ngrok.io',
+  accept: '*/*',
+  'user-agent': 'GitHub-Hookshot/a17c5c2',
+  'x-github-event': 'pull_request',
+  'x-github-delivery': '5e82f810-6bdf-11e7-8730-7a11141865f1',
+  'content-type': 'application/json',
+  'content-length': '20087',
+  'x-forwarded-for': '192.30.252.42' },
+body:{ action: 'closed',
   number: 5,
   pull_request:
    { url: 'https://api.github.com/repos/vrann/pull-requests-cli/pulls/5',
@@ -1802,8 +1832,17 @@ closed: { action: 'closed',
      events_url: 'https://api.github.com/users/vrann/events{/privacy}',
      received_events_url: 'https://api.github.com/users/vrann/received_events',
      type: 'User',
-     site_admin: false } },
-reopened: { action: 'reopened',
+     site_admin: false } } },
+reopened: {
+  headers: { host: 'a51fbef7.ngrok.io',
+  accept: '*/*',
+  'user-agent': 'GitHub-Hookshot/a17c5c2',
+  'x-github-event': 'pull_request',
+  'x-github-delivery': '5e82f810-6bdf-11e7-8730-7a11141865f1',
+  'content-type': 'application/json',
+  'content-length': '20087',
+  'x-forwarded-for': '192.30.252.42' },
+body:{ action: 'reopened',
   number: 5,
   pull_request:
    { url: 'https://api.github.com/repos/vrann/pull-requests-cli/pulls/5',
@@ -1987,6 +2026,6 @@ reopened: { action: 'reopened',
      received_events_url: 'https://api.github.com/users/vrann/received_events',
      type: 'User',
      site_admin: false } }
-}
+}}
 
 module.exports = testMessages;

@@ -1,0 +1,31 @@
+<table ng-repeat="(type, info) in data" class="table table-hover table-bordered">
+    <caption>
+            <button class="mage-btn btn btn-outline" ng-class="type == 'monthly' ? 'btn-default' : 'btn-primary'" ng-click="setCurrentPeriod('monthly')">Month</button>   
+            <button class="mage-btn btn btn-outline" ng-class="type == 'quoter' ? 'btn-default' : 'btn-primary'" ng-click="setCurrentPeriod('quoter')">Quarter</button>  
+            <button class="mage-btn btn btn-outline" ng-class="type == 'years' ? 'btn-default' : 'btn-primary'" ng-click="setCurrentPeriod('years')">Year</button>
+ 
+            <div ng-show="(showSelect === '1' && period != 'all')" style="float:right">
+                <select name="select" style="float: right" class="input-xlarge" ng-model="info.selected" ng-change="setPeriod(type)">
+                    <option ng-repeat="period in info.periods" ng-click="setPeriod(period.value, period.alias)" value="{{period.value}}">{{period.label}}</option> 
+                </select>
+            </div>  
+    </caption>
+    <thead>
+    <tr>
+        <th class="text-center">#</th>
+        <th>Contributor</th>
+        <th class="text-center">Accepted</th>
+        <th class="text-center">Created</th>
+        <th class="text-center">Rejected</th>
+    </tr>
+    </thead>
+    <tbody id="{{type}}">
+            <tr ng-repeat="contributor in info.contributors">
+                <td class="text-center">{{contributor.position}}</td>
+                <td><img style="height:20px" src="{{contributor.avatar}}"> <a target="_blank" href={{contributor.user_link}}>{{contributor.name}}</a></td>
+                <td class="text-center"><a target="_blank" href="{{contributor.accepted_url}}">{{contributor.accepted}}</a></td>
+                <td class="text-center"><a target="_blank" href="{{contributor.created_url}}">{{contributor.created}}</a></td>
+                <td class="text-center"><a target="_blank" href="{{contributor.rejected_url}}">{{contributor.rejected}}</a></td>
+            </tr>
+    </tbody>
+</table>

@@ -6,10 +6,11 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+
 var webpackConfig = {
     entry: './src/app.js',
     output: {
-      filename: 'js/output.[hash].bundle.js',
+      filename: 'js/output.bundle.js',
       path: path.resolve(__dirname, 'dist')
     },
     module: {
@@ -52,3 +53,13 @@ var webpackConfig = {
       })
   ]};
 module.exports = webpackConfig;
+
+    //"angular-chart.js": "^1.1.1",
+    //"angular-ui-bootstrap": "^2.5.0",
+    //"angular-ui-router": "^0.4.2",
+    //"bootstrap": "3.3.7",
+    //"chart.js": "^2.5.0",
+    //"elasticsearch": "^13.0.0",
+    //"elasticsearch-browser": "^12.1.3",
+    //"ui-bootstrap": "^0.1.10",
+    //"ui-router-extras": "^0.1.3"

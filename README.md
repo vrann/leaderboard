@@ -73,3 +73,11 @@ To set up a repository webhook on GitHub, head over to the Settings page of your
 Payload url: <webhook_invoke_url>
 Content type: `application/json`
 Events: Send me all
+
+### 6. Compile and deploy Frontend
+```
+cd frontend
+webpack
+cd dist
+aws s3 sync . s3://partners.magento.com/
+```

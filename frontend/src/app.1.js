@@ -1,5 +1,5 @@
 
-//import 'angular';
+import 'angular';
 //import 'angular-ui-router';
 //import 'ui-router-extras';
 //import 'chart.js'
@@ -10,7 +10,7 @@ import 'angular-ui-bootstrap';
 //import esFactory from './githubElasticAdapter.js'
 //import 'jquery'
 //import "bootstrap/dist/css/bootstrap.min.css"
-//import "bootstrap"
+import "bootstrap"
 import "bootstrap/less/bootstrap.less"
 import "./../less/typography.less"
 import "./../less/universal.less"
@@ -18,7 +18,7 @@ import "./../less/partners.less"
 
 //import "bootstrap/js/modal.js"
 
-//import teamsLoaderFactory from "./teamsLoader.js"
+import teamsLoaderFactory from "./teamsLoader.js"
 import teamsRendererFactory from "./teamsRenderer.js"
 
 
@@ -75,11 +75,25 @@ app.directive('teamElement', function () {
         //     elementPeriod: '@period'
         // },
         link: function($scope, element, attributes) {
-            $scope.gridSize = attributes.size
-            $scope.showSelect = attributes.showselect
-            $scope.showButton = attributes.showbutton
-            $scope.showSizeSelector = attributes.showsizeselector
-            $scope.elementPeriod = attributes.period
+            //console.log(attributes)
+            var alias = attributes.aliasname
+            if (!$scope.$parent.hasOwnProperty('data')) {
+                $scope.$parent['data'] = {}
+            }
+            $scope.$parent.data[alias] = {}
+            $scope.$parent.data[alias].gridSize = attributes.size
+            $scope.$parent.data[alias].showSelect = attributes.showselect
+            $scope.$parent.data[alias].showButton = attributes.showbutton
+            $scope.$parent.data[alias].showSizeSelector = attributes.showsizeselector
+            $scope.$parent.data[alias].elementPeriod = attributes.period
+            
+            if (!$scope.$parent.hasOwnProperty('aliases')) {
+                $scope.$parent.aliases = []
+            }
+            $scope.$parent.aliases.push(alias);
+        },
+        controller: function($scope) {
+            
         }
     }
 });
@@ -88,15 +102,7 @@ var contributorsTemplateUrl = require('ngtemplate-loader!html-loader!./widgets/c
 
 app.directive('openSourceElement', function () {
     return {
-        templateUrl: contributorsTemplateUrl,
-
-        link: function($scope, element, attributes) {
-            $scope.gridSize = attributes.size
-            $scope.showSelect = attributes.showselect
-            $scope.showButton = attributes.showbutton
-            $scope.showSizeSelector = attributes.showsizeselector
-            $scope.elementPeriod = attributes.period
-        }
+        templateUrl: contributorsTemplateUrl
     }
 });    
 
@@ -139,37 +145,37 @@ app.controller('TeamsController', ['$scope', '$http', function ($scope, $http) {
         //     $scope.data = {}
         //     $scope.data[$scope.aliasName] = data[$scope.aliasName];
         // });
-        console.log('Response')
+
         $scope.setTeamsPeriodSelect = function(period, alias) {
             console.log(period, alias)
             //console.log(period, alias, $scope.data[alias].selectedPeriod)
-            $scope.currentPeriod = $scope.selectedPeriod
+            $scope.data[alias].currentPeriod = $scope.data[alias].selectedPeriod
             //console.log($scope.$parent.currentPeriod)
-
-            teamsRendererFactory($scope).renderTeams(response.data, period, $scope.selectedPeriod, $scope.gridSize)
-
+            var obj = {}
+            teamsRendererFactory($scope).renderTeams(response.data, period, $scope.data[alias].selectedPeriod, $scope.data[alias].gridSize)
+            $scope.data[alias] = obj
+            console.log(obj)
             //$scope.$parent.data[alias].selectedPeriod = $scope.$parent.data[alias].currentPeriod
             //console.log($scope.$parent.data[alias].selectedPeriod, $scope.$parent.data[alias].currentPeriod, $scope.$parent.data)
             console.log($scope)
         }
 
-        
         console.log($scope)
         $scope.response = response
         //$scope.aliases.map(alias => {
-            var period = $scope.elementPeriod ? $scope.elementPeriod : 'all'
+            var period = $scope.data[alias].elementPeriod ? $scope.data[alias].elementPeriod : 'all'
             console.log(period)
             var currentPeriod = 'all'
             //$scope['currentPeriod'] = currentPeriod;
             console.log(currentPeriod)
-            if ($scope['gridSize'] == undefined) {
-                $scope['gridSize'] = -1;
+            if ($scope.data[alias]['gridSize'] == undefined) {
+                $scope.data[alias]['gridSize'] = -1;
             }
-            teamsRendererFactory($scope).renderTeams(response.data, period, 'all', $scope.gridSize)    
+            teamsRendererFactory($scope.data[alias]).renderTeams(response.data, period, 'all', $scope.data[alias].gridSize)    
             
             $scope.setTeamsPeriod = function(period, alias) {
                 console.log(period, 'all')
-                teamsRendererFactory($scope).renderTeams(response.data, period, 'all', $scope.gridSize)
+                teamsRendererFactory($scope[alias]).renderTeams(response.data, period, 'all', $scope.gridSize)
             }
 
             $scope.setTeamsPeriodElement = function(period, currentPeriod) {
@@ -189,18 +195,15 @@ app.controller('TeamsController', ['$scope', '$http', function ($scope, $http) {
         
         
         console.log($scope)
-      }).catch(e => {console.log('Error:', e)})
+      }).catch(console.log)
 }]);
 
 app.controller('OpenSourceController', ['$scope', '$http', function ($scope, $http) {
     $http.get('https://s3.amazonaws.com/public.magento.com/leadersboard.js').then(response => {
-        
         var structure = response.data;
-        console.log(structure)
         $scope.types = Object.keys(structure);
-        var type = $scope.types[0]
         $scope.data = {}
-        //$scope.types.map(type => {
+        $scope.types.map(type => {
             var current = structure[type].periods[structure[type].periods.length - 1]
             $scope.data[type] = {
                 current: current,
@@ -208,23 +211,12 @@ app.controller('OpenSourceController', ['$scope', '$http', function ($scope, $ht
                 periods: structure[type].periods,
                 selected: current.value
             }    
-        //})
+        })
 
         $scope.setPeriod = function(period) {
             var current = structure[period].periods.find(element => {
                 return element.value === $scope.data[period].selected
             })
-            $scope.data[period] = {
-                current: current,
-                contributors: structure[period].contributors[current.value],
-                periods: structure[period].periods,
-                selected: current.value
-            }
-        }
-
-        $scope.setCurrentPeriod = function(period) {
-            $scope.data = {}
-            var current = structure[period].periods[structure[period].periods.length - 1]
             $scope.data[period] = {
                 current: current,
                 contributors: structure[period].contributors[current.value],

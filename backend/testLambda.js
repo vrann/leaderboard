@@ -1,3 +1,4 @@
 var modules = require('./index.js')
-modules.scheduleBatchJobs();
+modules.publishStatistic();
+//modules.scheduleBatchJobs();
 //modules.checkIntegrity();

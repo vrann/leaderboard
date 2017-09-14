@@ -4,11 +4,8 @@
         <meta charset="UTF-8">
         <title>Magento Partners</title> 
         <!--script src="https://s3.amazonaws.com/public.magento.com/partners.leaderboard.js"></script-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <!-- Latest compiled and minified JavaScript -->  
-</head>
-    <body>
+    </head>
+    <body ng-app="gitStatUI">
         
         <header id="nav-main" class="nav-main partners">
             <div class="container">
@@ -41,12 +38,19 @@
             
         </div-->
 
- 
+<div>
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+            </ul>
+        </div> 
               
 
         <div id="container" class="container">
-
-                
 
             <div class="well">
 <div class="row-fluid">
@@ -58,45 +62,24 @@
 </div>
 </div>
 </div>
-
-
-
-
-            
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>  
-            <div class="well well-border" ng-app="gitStatUI">
+            <div class="well well-border">
                 <div class="row-fluid">
                     <div class="span12">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Individual Contributors</a></li>
-                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Partners Contributors</a></li>
-                        </ul>
-                            
-   
+                        <p>      
                             <div class="field field-name-body field-type-text-with-summary field-label-hidden">
-                                <div class="field-items tab-content">
-                                    <div class="field-item even tab-pane fade in active" id="home" role="tabpanel" ng-controller="OpenSourceController">
-                                        <open-source-element size="5" showselect="1"></open-source-element>
+                                <div class="field-items">
+                                    <div class="field-item even" ng-controller="OpenSourceController">
+                                        <open-source-element></open-source-element>
                                     </div>
-                                    <div class="field-item even tab-pane fade" id="profile" role="tabpanel" ng-controller="TeamsController">
-                                        <team-element size="-1" showselect="0" showbutton="1" showsizeselector="1"></team-element>
-                                        <!--team-element aliasname="teams_month" test="test" size="5" period="month" showselect="1" showbutton="0" showsizeselector="0"></team-element>
-                                        <team-element aliasname="teams_quater" size="5" period="quater" showselect="1" showbutton="0" showsizeselector="0"></team-element>
-                                        <team-element aliasname="teams_year" size="5" period="year" showselect="1" showbutton="0" showsizeselector="0"></team-element-->
+                                    <div class="field-item even" ng-controller="TeamsController">
+                                        <team-element size="-1" showselect="1" showbutton="0" showsizeselector="1"></team-element>
                                     </div>
                                 </div>
                             </div>
-
+                        </p>
                     </div>
                 </div>
             </div>  
-
-
-
-
-
         </div>
     </body>
 </html>
