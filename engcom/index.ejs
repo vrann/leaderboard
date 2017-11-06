@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>Magento Partners</title> 
+        <!--script src="https://s3.amazonaws.com/public.magento.com/partners.leaderboard.js"></script-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!-- Latest compiled and minified JavaScript -->  
+</head>
+    <body>
+        
+        <header id="nav-main" class="nav-main partners">
+            <div class="container">
+                <div class="nav-logo-subsite partners">
+                    <a href="https://partners.magento.com/portal/">
+                        <span class="logo-main">Magento</span>
+                        <span class="logo-subsite">Community</span>
+                    </a>
+                    <div class="magento-link-wrapper">
+                        <a class="magento-link" href="https://magento.com/">Go to<br>Magento.com</a>
+                    </div>
+                </div>
+            </div>
+            
+        </header>
+         
+        <!--div class="header" style="background-color:white; border-bottom:1px solid #CCC;">
+            <div class="row">
+                <img src="img/placeholder-resources-header.png">
+                <div class="nav-logo-subsite partners">
+                    <a href="https://partners.magento.com/portal/">
+                        <span class="logo-main">Magento</span>
+                        <span class="logo-subsite">Partners</span>
+                    </a>
+                    <div class="magento-link-wrapper">
+                        <a class="magento-link" href="https://magento.com/">Go to<br>Magento.com</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div-->
+
+ 
+              
+
+        <div id="container" class="container">
+
+                
+
+            <div class="well">
+<div class="row-fluid">
+<div class="span12">
+<h3><span class="fa-stack" style="font-size:20px;"><i class="fa fa-circle fa-stack-2x teal"></i> <i class="fa fa-question fa-stack-1x fa-inverse"></i> </span>Contributions</h3>
+
+<p>Contributions from the Community of Magento developers is the foundation of the open source component of the Magento platform. Contributions are the source code patches either with the fixes for the issues or with the new funcitionality delivered to the Magento by external developers (Community or the Partners). Magento is using GitHub for source code version control and GitHub Pull Requests are the best way of delivering fixes to the Magento source code.
+</p>
+</div>
+</div>
+</div>
+
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>  
+            <div class="well well-border" ng-app="gitStatUI">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#prs-stat" aria-controls="prs-stat-total" role="tab" data-toggle="tab">PRs Statistic Total</a></li>
+                            <li role="presentation"><a href="#prs-stat-oss" aria-controls="prs-stat-oss" role="tab" data-toggle="tab">PRs Statistic Open Source</a></li>
+                            <li role="presentation"><a href="#prs-stat-partners" aria-controls="prs-stat-partners" role="tab" data-toggle="tab">PRs Statistic Commerce Repositories</a></li>
+                            <li role="presentation"><a href="#prs-stat-msi" aria-controls="prs-stat-msi" role="tab" data-toggle="tab">PRs Statistic MSI</a></li>
+                            
+                            
+                            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Partners Contributors</a></li>
+                            <!--li role="presentation"><a href="#public" aria-controls="public" role="tab" data-toggle="tab">Magento.com Report</a></li-->
+                            <li role="presentation"><a href="#charts" aria-controls="charts" role="tab" data-toggle="tab">Charts</a></li>
+                            <li role="presentation"><a href="#prs" aria-controls="prs" role="tab" data-toggle="tab">Pull Requests</a></li>
+                            <!--li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Individual Contributors</a></li-->
+                                                        
+                        </ul>
+                            <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+                                <div class="field-items tab-content">
+                                    <div class="field-item even tab-pane fade in active" id="prs-stat-toal" role="tabpanel">
+                                        <statistic-element 
+                                            repositories="magento/magento2;magento-partners/magento2ce;magento-partners/magento2ee;magento-engcom/msi">
+                                        </statistic-element>
+                                    </div>
+                                    <div class="field-item even tab-pane fade in" id="prs-stat-oss" role="tabpanel">
+                                        <statistic-element 
+                                            repositories="magento/magento2">
+                                        </statistic-element>
+                                    </div>
+                                    <div class="field-item even tab-pane fade in" id="prs-stat-partners" role="tabpanel">
+                                        <statistic-element 
+                                            repositories="magento-partners/magento2ce;magento-partners/magento2ee">
+                                        </statistic-element>
+                                    </div>
+                                    <div class="field-item even tab-pane fade in" id="prs-stat-msi" role="tabpanel">
+                                        <statistic-element 
+                                            repositories="magento-engcom/msi">
+                                        </statistic-element>
+                                    </div>
+
+                                    <div class="field-item even tab-pane fade in" id="profile" role="tabpanel" ng-controller="TeamsController">
+                                        <team-element size="-1" showselect="0" showbutton="1" showsizeselector="1"></team-element>
+                                        <!--team-element aliasname="teams_month" test="test" size="5" period="month" showselect="1" showbutton="0" showsizeselector="0"></team-element>
+                                        <team-element aliasname="teams_quater" size="5" period="quater" showselect="1" showbutton="0" showsizeselector="0"></team-element>
+                                        <team-element aliasname="teams_year" size="5" period="year" showselect="1" showbutton="0" showsizeselector="0"></team-element-->
+                                    </div>
+                                    <div class="field-item even tab-pane fade" id="prs" role="tabpanel" ng-controller="PRsController">
+                                        <prs-element></prs-element>
+                                    </div>
+                                    <div class="field-item even tab-pane fade" id="charts" role="tabpanel" ng-controller="PrChartController">
+                                        <team-chart-element showselect="0" showbutton="1" showsizeselector="0"></team-chart-element>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </body>
+</html>

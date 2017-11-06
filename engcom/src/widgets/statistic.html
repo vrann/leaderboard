@@ -1,0 +1,56 @@
+<table class="table table-hover table-condensed table-responsive" style="font-size: 10px;">
+    <thead>
+    <tr>
+        <th style="width: 10%;">Parameter</th>
+        <th style="width: 7%" ng-repeat="month in range">
+            {{month}}
+        </th>
+        <th style="width: 3%">YTD</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="info">
+        <td>Processed</td>
+        <td ng-repeat="month in range">{{processed[month]}}</td>
+        <td>{{processed.total}}</td>
+    </tr>
+    <tr class="success">
+        <td>Merged</td>
+        <td ng-repeat="month in range">{{merged[month].count}}</td>
+        <td>{{merged.total}}</td>
+    </tr>
+    <tr class="warning">
+        <td>Rejected</td>
+        <td ng-repeat="month in range">{{rejected[month].count}}</td>
+        <td>{{rejected.total}}</td>
+    </tr>
+    <tr class="danger">
+        <td>Created</td>
+        <td ng-repeat="month in range">{{created[month].count}}</td>
+        <td>{{created.total}}</td>
+    </tr>
+    <tr class="active">
+        <td>Outstanding</td>
+        <td ng-repeat="month in range">{{outstanding[month]}}</td>
+        <td>{{outstanding.total}}</td>
+    </tr>
+    <tr class="success">
+        <td>Accept. Rate</td>
+        <td ng-repeat="month in range">{{rate[month]}}%</td>
+        <td>{{rate.total}}%</td>
+    </tr>
+    <tr class="warning">
+        <td>Contributors</td>
+        <td ng-repeat="month in range">{{contributors[month]}}</td>
+        <td>{{contributors.total}}</td>
+    </tr>
+    <tr class="info">
+        <td>New Contributors</td>
+        <td ng-repeat="month in range">{{firstTimeContributors[month]}}</td>
+        <td>{{firstTimeContributors.total}}</td>
+    </tr>
+    </tbody>
+</table>
+<div style="margin:10px">
+    <canvas id="bar" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-colors="colors" chart-options="options" chart-dataset-override="datasetOverride"></canvas>
+</div>

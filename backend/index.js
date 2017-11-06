@@ -1,4 +1,4 @@
-var esGithubWriter = require("gitHubEs");
+var esGithubWriter = require("github-es");
 var AWS = require('aws-sdk');
 
 (function() {
@@ -48,8 +48,19 @@ exports.syncPRs = function syncPRs(event, context, callback) {
 }
 
 exports.acceptWebHook = function(event, context, callback) {
-    console.log("Start");
     var eventName = event.headers['X-GitHub-Event'] ? event.headers['X-GitHub-Event'] : event.headers['x-github-event'];
+    if (eventName == 'status') {
+        var res = {
+            "isBase64Encoded": false,
+            "statusCode": 200,
+            "headers": {},
+            "body": "Response"
+        };
+        callback(null, res);
+        return;
+    }
+
+    console.log("Start");
     var body = JSON.parse(event.body);
 
     console.log(eventName);
@@ -102,6 +113,8 @@ exports.synchronizePrs = function(event, context, callback) {
         owner: 'magento',
         repo: 'magento2', 
         state: 'closed',
+        sort: 'updated',
+        direction: 'desc'
     }
     writer.synchronizePullRequests(repoRequest);
 
@@ -109,20 +122,26 @@ exports.synchronizePrs = function(event, context, callback) {
         owner: 'magento',
         repo: 'magento2', 
         state: 'open',
+        sort: 'updated',
+        direction: 'desc'
     }
     writer.synchronizePullRequests(repoRequest);
 
     var repoRequest = {
         owner: 'magento-engcom',
-        repo: 'magento2', 
+        repo: 'msi', 
         state: 'closed',
+        sort: 'updated',
+        direction: 'desc'
     }
     writer.synchronizePullRequests(repoRequest);
 
     var repoRequest = {
         owner: 'magento-engcom',
-        repo: 'magento2', 
+        repo: 'msi', 
         state: 'open',
+        sort: 'updated',
+        direction: 'desc'
     }
     writer.synchronizePullRequests(repoRequest);
 
@@ -130,6 +149,8 @@ exports.synchronizePrs = function(event, context, callback) {
         owner: 'magento-partners',
         repo: 'magento2ce', 
         state: 'closed',
+        sort: 'updated',
+        direction: 'desc'
     }
     writer.synchronizePullRequests(repoRequest);
 
@@ -137,6 +158,8 @@ exports.synchronizePrs = function(event, context, callback) {
         owner: 'magento-partners',
         repo: 'magento2ce', 
         state: 'open',
+        sort: 'updated',
+        direction: 'desc'
     }
     writer.synchronizePullRequests(repoRequest);
 
@@ -144,6 +167,8 @@ exports.synchronizePrs = function(event, context, callback) {
         owner: 'magento-partners',
         repo: 'magento2ee', 
         state: 'closed',
+        sort: 'updated',
+        direction: 'desc'
     }
     writer.synchronizePullRequests(repoRequest);
 
@@ -151,8 +176,72 @@ exports.synchronizePrs = function(event, context, callback) {
         owner: 'magento-partners',
         repo: 'magento2ee', 
         state: 'open',
+        sort: 'updated',
+        direction: 'desc'
     }
     writer.synchronizePullRequests(repoRequest);
+}
+
+exports.processIntegrityChecksQueue = function() 
+{
+    var elasticsearchEndpoint = process.env.ES_ENDPOINT; //"127.0.0.1:9200" 
+    var gitHubToken = process.env.GIT_HUB_KEY; //""
+    var awsRegion = process.env.QUEUE_AWS_REGION; //"us-east-1"  
+    var queueUrl = process.env.QUEUE_URL; //"http://sqs.us-east-1.amazonaws.com/417782006694/batch-ecs-queue"
+    AWS.config.setPromisesDependency(require('bluebird'));
+    var sqs = new AWS.SQS({region: awsRegion});
+    var writer = esGithubWriter(gitHubToken, elasticsearchEndpoint)
+    sqs.receiveMessage({
+        QueueUrl: queueUrl,
+        MaxNumberOfMessages: 10,
+        VisibilityTimeout: 10
+    }).promise().then((messages) => {
+        prs = [];
+        teams = [];
+        var visitedMessages = {}
+        receipts = []
+        if (messages.hasOwnProperty('Messages') && messages.Messages.length > 0) {
+            messages.Messages.map(message => {
+                if (visitedMessages.hasOwnProperty(message.MessageId)) {
+                    console.log('already visited', message.MessageId);
+                    return;
+                }
+                console.log('visit', message.MessageId);
+                visitedMessages[message.MessageId] = true;
+                receipts.push(message.ReceiptHandle);
+                messageBody = JSON.parse(message.Body);
+                console.log(messageBody)
+                switch (messageBody.action) {
+                    case 'syncTeam':
+                        teams.push(messageBody.id)
+                        break;
+                    case 'syncPr':
+                        prs.push(messageBody.pr)
+                        break;   
+                    default:
+                        break;
+                }
+            })
+            console.log(prs, teams)
+            promises = [];
+            if (prs.length > 0) {
+                promises.push(writer.synchronizeIndividualPRs(prs));
+            }
+            if (teams.length > 0) {
+                promises.push(writer.synchronizeIndividualTeam(teams));
+            }
+            console.log(promises);
+            return Promise.all(promises).then(response => {
+                console.log(response);
+                deleteMessages = [];
+                receipts.map(receipt => {
+                    deleteMessages.push(sqs.deleteMessage({QueueUrl: queueUrl, ReceiptHandle: receipt}).promise())
+                })
+                return Promise.all(deleteMessages);
+                
+            }).then(console.log).catch(console.log)
+        }
+    })
 }
 
 exports.publishStatistic = function() {
@@ -174,6 +263,46 @@ exports.publishStatistic = function() {
         }
         s3.putObject(params).promise().then(console.log).catch(console.log)
     })
+}
+
+exports.publishTestStatistic = function() {
+    var elasticsearchEndpoint = process.env.ES_ENDPOINT; //"127.0.0.1:9200" 
+    var gitHubToken = process.env.GIT_HUB_KEY; //""
+    //var elasticsearchEndpoint = "127.0.0.1:9200" 
+    //var gitHubToken = process.env.GIT_HUB_KEY; //""
+    //var awsRegion = process.env.QUEUE_AWS_REGION; //"us-east-1"
+    var writer = esGithubWriter(gitHubToken, elasticsearchEndpoint)
+    writer.loadPartnersStatistic().then(result => {
+        console.log(result)
+        var stat = JSON.stringify(result);
+        var s3 = new AWS.S3();
+        var params = {
+            Bucket : 'public.magento.com',
+            Key : 'partners.leaderboard-monthly.js',
+            Body : stat,
+            ACL:'public-read-write',
+            ContentType: 'application/json',
+            CacheControl: 'max-age=0'
+        }
+        s3.putObject(params).promise().then(console.log).catch(console.log)
+    })
+}
+
+exports.loadPullRequestsData = function(event, context, callback) {
+    var elasticsearchEndpoint = process.env.ES_ENDPOINT 
+    var gitHubToken = process.env.GIT_HUB_KEY; //""
+    //var awsRegion = process.env.QUEUE_AWS_REGION; //"us-east-1"
+    var writer = esGithubWriter(gitHubToken, elasticsearchEndpoint)
+    writer.loadPartnersStatistic().then(result => {
+        var res = {
+            "isBase64Encoded": false,
+            "statusCode": 200,
+            "headers": {"Content-Type": "application/json"},
+            "body": JSON.stringify(result)
+        };
+        console.log(res);
+        callback(null, res);
+    }).catch(console.log)
 }
 
 exports.scheduleBatchJobs = function(event, context, callback) {

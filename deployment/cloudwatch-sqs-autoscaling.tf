@@ -233,24 +233,24 @@ resource "aws_cloudwatch_metric_alarm" "RemoveCapacityFromProcessQueue" {
   alarm_actions     = ["${aws_autoscaling_policy.container_scalein_policy.arn}"]
 }
 
-//resource "aws_cloudwatch_metric_alarm" "RemoveCapacityFromProcessQueue" {
-//  alarm_name          = "RemoveCapacityFromProcessQueue"
-//  comparison_operator = "LessThanOrEqualToThreshold"
-//  evaluation_periods  = "1"
-//  metric_name         = "ApproximateNumberOfMessagesVisible"
-//  namespace           = "AWS/SQS"
-//  period              = "300"
-//  statistic           = "Average"
-//  threshold           = "1"
-//
-//  dimensions {
-//    #    AutoScalingGroupName = "${aws_autoscaling_group.container_autoscaling.name}"
-//    QueueName = "${aws_sqs_queue.batch_ecs_queue.name}"
-//  }
-//
-//  alarm_description = "This metric monitors SQS Length"
-//  alarm_actions     = ["${aws_autoscaling_policy.container_scalein_policy.arn}"]
-//}
+resource "aws_cloudwatch_metric_alarm" "RemoveCapacityFromProcessQueue" {
+  alarm_name          = "RemoveCapacityFromProcessQueue"
+  comparison_operator = "LessThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "ApproximateNumberOfMessagesVisible"
+  namespace           = "AWS/SQS"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "1"
+
+  dimensions {
+    #    AutoScalingGroupName = "${aws_autoscaling_group.container_autoscaling.name}"
+    QueueName = "${aws_sqs_queue.batch_ecs_queue.name}"
+  }
+
+  alarm_description = "This metric monitors SQS Length"
+  alarm_actions     = ["${aws_autoscaling_policy.container_scalein_policy.arn}"]
+}
 
 resource "aws_sqs_queue" "batch_ecs_queue" {
   name                      = "batch-ecs-queue"

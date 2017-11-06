@@ -1,5 +1,5 @@
-var coordinatorFactory = require('gitHubEs/entities/coordinator.js')
-var EsBuilder = require('gitHubEs/esBuilder')
+var coordinatorFactory = require('github-es/entities/coordinator.js')
+var EsBuilder = require('github-es/esBuilder')
 
 
 

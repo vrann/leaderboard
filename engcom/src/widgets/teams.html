@@ -1,0 +1,125 @@
+<table class="table table-hover table-bordered">
+    <caption>
+            <p ng-show="(showSizeSelector === '1')">
+                <button class="mage-btn btn" ng-class="gridSize == '-1' ? 'btn-default' : 'btn-primary'" ng-click="setSize(-1)">Show All</button>
+                <button class="mage-btn btn" ng-class="gridSize == '5' ? 'btn-default' : 'btn-primary'" ng-click="setSize(5)">Show First 5</button>
+            </p>
+
+                <button class="mage-btn btn btn-outline" ng-class="period == 'all' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('all')">All Time</button> 
+                <button class="mage-btn btn btn-outline" ng-class="period == 'month' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('month')">Month</button>   
+                <button class="mage-btn btn btn-outline" ng-class="period == 'quater' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('quater')">Quarter</button>  
+                <button class="mage-btn btn btn-outline" ng-class="period == 'year' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('year')">Year</button>
+ 
+            <div ng-show="(showSelect === '1' && period != 'all')" style="float:right">
+                <select name="select" value="{{selectedPeriod}}" class="input-xlarge" ng-model="selectedPeriod" ng-change="setTeamsPeriodSelect(period, aliasName)">
+                    <option ng-repeat="periodElement in periods" value="{{periodElement.alias}}">{{periodElement.label}}</option> 
+                </select>   
+            </div>  
+            <div class="btn-group" ng-if="(showButton === '1' && period != 'all')">
+                <button class="mage-btn btn btn-default" id="current-period}}">{{periodLabel}}</button>
+                <button class="mage-btn btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu" id="{{period}}-menu">
+                    <li ng-repeat="periodElement in periods">
+                        <a class="dropdown-item" ng-click="setTeamsPeriodElement(period, periodElement.alias)">{{periodElement.label}}</a>
+                    </li>
+                </ul>
+            </div>
+    </caption>
+                
+    <thead>
+        <tr>
+            <th ng-repeat="label in labelsTeam">{{label}}</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr ng-repeat="team in teamInfo" >
+                <td>
+                    <a href="#" data-toggle="modal" data-target="#myModal-{{team.id}}">{{team.name}}</a>
+                    <div class="modal fade" id="myModal-{{team.id}}" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <button class="close" data-dismiss="modal" type="button"><i class="fa fa-times"></i></button>
+                            <h4 class="modal-title">Team {{team.name}} Pull Requests</h4>
+                        </div>
+                        <div class="modal-body">
+                                        Team {{team.name}} <br />
+                                        Total Prs for the period: <b>{{team.prsNumberTotal}}</b> <br />
+                                        Accepted PRs in {{period}}: <b>{{team.prsNumberAccepted}}</b> <br />
+                                        Prs in Partner org in {{period}}: <b>{{team.prsNumberPartner}}</b> <br />
+                                        Prs in Open Source in {{period}}: <b>{{team.prsNumberOSS}}</b> <br />
+                                <table>
+                                    <tr ng-repeat="member in team.membersData">
+                                        <td><a href="https://github.com/{{member.url}}">{{member.login}}<br /><img width="50px" src="{{member.avatar_url}}"></a></td>
+                                        <td>
+                                            <div>
+                                                <h5 ng-if="keys(member.opened).length > 0">Opened in {{range}}</h4>
+                                                <ul>
+                                                    <li ng-repeat="(repository, num) in member.opened">
+                                                        <a href="https://github.com/{{repository}}/{{member.openedLink}}">{{num}} PRs in {{repository}}</a><br />
+                                                    </li>
+                                                </ul> 
+                                            </div>
+                                                
+                                            <div>
+                                                <h5 ng-if="keys(member.closed).length > 0">Closed in {{range}}</h4>
+                                                <ul>
+                                                        <li ng-repeat="(repository, num) in member.closed">
+                                                            <a href="https://github.com/{{repository}}/{{member.closedLink}}">{{num}} PRs in {{repository}}</a><br />
+                                                        </li>
+                                                    </ul> 
+                                            </div>
+
+                                            <div>
+                                                <h5 ng-if="keys(member.merged).length > 0">Merged in {{range}}</h4>
+                                                <ul>
+                                                        <li ng-repeat="(repository, num) in member.merged">
+                                                            <a href="https://github.com/{{repository}}/{{member.mergedLink}}">{{num}} PRs in {{repository}}</a>
+                                                        </li>
+                                                    </ul> 
+                                            </div>
+                                            
+                                            <!--div><a href="https://github.com/magento/magento2/pulls?q=is%3Apr+is%3Amerged+is%3Aclosed+author%3A{{member.login}}+closed%3A{{range}}">PRs</a></div-->
+                                            <!--p>
+                                            <h5>Open:</h5>
+                                                <div ng-repeat="pr in member.opened"><a href="https://github.com/{{pr.baseOrganisation}}/{{pr.baseRepo}}/pull/{{pr.number}}">{{pr.baseOrganisation}}/{{pr.baseRepo}}#{{pr.number}}</a></div>
+                                            </p><p>
+                                            <h5>Closed:</h5>
+                                                <div ng-repeat="pr in member.closed"><a href="https://github.com/{{pr.baseOrganisation}}/{{pr.baseRepo}}/pull/{{pr.number}}">{{pr.baseOrganisation}}/{{pr.baseRepo}}#{{pr.number}}</a></div>
+                                            </p><p>
+                                            <h5>Merged:</h5>
+                                                <div ng-repeat="pr in member.merged"><a  href="https://github.com/{{pr.baseOrganisation}}/{{pr.baseRepo}}/pull/{{pr.number}}">{{pr.baseOrganisation}}/{{pr.baseRepo}}#{{pr.number}}</a></div>
+                                            </p-->  
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="modal-footer"><button class="mage-btn btn btn-default" data-dismiss="modal" type="button">Close</button></div>
+                        </div>
+                    </div>
+                    </div>
+                </td>
+                <!--td>{{team.membersNumber}}</td-->
+                <td>{{team.prsNumberTotal}}</td>
+                <td>{{team.prsNumberAccepted}}</td>
+                <td>{{team.prsNumberPartner}}</td>
+                <td>{{team.prsNumberOSS}}</td>
+                <td>
+                    <ul>
+                        <li ng-repeat="(label_id, label) in team.labels" style="list-style: none; border-radius: 3px;margin:2px; color:#332900; background-color:#{{label.color}}">
+                        <span  style="border-radius:10px;color:white; background-color:#f16321;padding:2px">&nbsp;{{label.count}}&nbsp;</span>&nbsp;{{label.name}}</li>
+                    </ul>
+                </td>
+                <!--td>{{team.points}}</td-->
+            </tr>
+            <tr ng-if="gridSize == -1">
+                <td><h4>{{teamInfo.totals.members}} members in {{teamInfo.totals.teams}} teams</h4></td>
+                <td><h4>{{teamInfo.totals.prs}}</h4></td>
+                <td><h4>{{teamInfo.totals.prsAccepted}}</h4></td>
+                <td><h4>{{teamInfo.totals.commercePRs}}</h4></td>
+                <td><h4>{{teamInfo.totals.ossPRs}}</h4></td>
+                <td></td>
+                <!--td><h4>{{teamInfo.totals.points}}</h4></td-->
+            </tr>
+    </tbody>
+</table>

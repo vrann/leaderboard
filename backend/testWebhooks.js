@@ -1,7 +1,7 @@
 var modules = require('./index.js')
 var testHooks = require('./samples/webhooks/teams.js')
 var testPRHooks = require('./samples/webhooks/pull-requests.js')
-var EsBuilder = require('gitHubEs/esBuilder')
+var EsBuilder = require('github-es/esBuilder')
 var elasticsearchEndpoint = process.env.ES_ENDPOINT;  
 client = EsBuilder(elasticsearchEndpoint)
 

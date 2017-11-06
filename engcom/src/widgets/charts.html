@@ -1,0 +1,29 @@
+<div>
+    <p ng-show="(showSizeSelector === '1')">
+        <button class="mage-btn btn" ng-class="gridSize == '-1' ? 'btn-default' : 'btn-primary'" ng-click="setSize(-1)">Show All</button>
+        <button class="mage-btn btn" ng-class="gridSize == '5' ? 'btn-default' : 'btn-primary'" ng-click="setSize(5)">Show First 5</button>
+    </p>
+
+    <button class="mage-btn btn btn-outline" ng-class="period == 'all' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('all')">All Time</button> 
+    <button class="mage-btn btn btn-outline" ng-class="period == 'month' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('month')">Month</button>   
+    <button class="mage-btn btn btn-outline" ng-class="period == 'quater' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('quater')">Quarter</button>  
+    <button class="mage-btn btn btn-outline" ng-class="period == 'year' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('year')">Year</button>
+
+    <div ng-show="(showSelect === '1' && period != 'all')" style="float:right">
+        <select name="select" value="{{selectedPeriod}}" class="input-xlarge" ng-model="selectedPeriod" ng-change="setTeamsPeriodSelect(period, aliasName)">
+            <option ng-repeat="periodElement in periods" value="{{periodElement.alias}}">{{periodElement.label}}</option> 
+        </select>   
+    </div>  
+    <div class="btn-group" ng-if="(showButton === '1' && period != 'all')">
+        <button class="mage-btn btn btn-default" id="current-period}}">{{periodLabel}}</button>
+        <button class="mage-btn btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+        <ul class="dropdown-menu" id="{{period}}-menu">
+            <li ng-repeat="periodElement in periods">
+                <a class="dropdown-item" ng-click="setTeamsPeriodElement(period, periodElement.alias)">{{periodElement.label}}</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div style="margin:10px">
+    <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series"></canvas>
+</div>

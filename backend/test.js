@@ -36,11 +36,11 @@
 // //catches uncaught exceptions
 // process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
-var esGithubWriter = require('gitHubEs');
-var pullRequestMessages = require('./samples/webhooks/pull-requests.js');
-var writer = esGithubWriter('2861474c182c120b47503373e12db014133de701', 'http://127.0.0.1:9200/');
+// var esGithubWriter = require('github-es');
+// var pullRequestMessages = require('./samples/webhooks/pull-requests.js');
+// var writer = esGithubWriter('2861474c182c120b47503373e12db014133de701', 'http://127.0.0.1:9200/');
 
-// var GitHubBuilder = require('gitHubEs/gitHubBuilder')
+// var GitHubBuilder = require('github-es/gitHubBuilder')
 // github = GitHubBuilder('2861474c182c120b47503373e12db014133de701')
 
 //writer.checkCountPrs();
@@ -115,8 +115,8 @@ var writer = esGithubWriter('2861474c182c120b47503373e12db014133de701', 'http://
 
 // writer.synchronizeTeams("magento-partners");
 
-// var coordinatorFactory = require('gitHubEs/entities/coordinator.js')
-// var teamWriter = require('gitHubEs/entities/team.js');
+// var coordinatorFactory = require('github-es/entities/coordinator.js')
+// var teamWriter = require('github-es/entities/team.js');
 
 // coordinatorFactory.get({
 //     client: client,
@@ -141,10 +141,10 @@ var writer = esGithubWriter('2861474c182c120b47503373e12db014133de701', 'http://
 
 
    //.writePullRequest(testMessages.created);
-event = pullRequestMessages.created;
-var eventName = event.headers['X-Github-Event'] ? event.headers['X-Github-Event'] : event.headers['x-github-event'];
-var body = event.body;
-writer.processWebHook(eventName, body);
+// event = pullRequestMessages.created;
+// var eventName = event.headers['X-Github-Event'] ? event.headers['X-Github-Event'] : event.headers['x-github-event'];
+// var body = event.body;
+// writer.processWebHook(eventName, body);
 
 // event = pullRequestMessages.created;
 // var eventName = event.headers['X-Github-Event'] ? event.headers['X-Github-Event'] : event.headers['x-github-event'];
@@ -217,4 +217,13 @@ writer.processWebHook(eventName, body);
 // }
 // awsLambda = require('../index.js');
 // awsLambda.acceptWebHook(event, {}, console.log);
+var gitHubToken = process.env.GIT_HUB_KEY;
+var GitHubBuilder = require('github-es/gitHubBuilder')
+github = GitHubBuilder(gitHubToken)
+github.issues.getIssueLabels(
+    {owner: 'magento',
+repo: 'magento2',
+number: 10977}).then(labels => {
+    console.log(labels);
+})
 

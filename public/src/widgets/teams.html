@@ -1,0 +1,51 @@
+<table class="table table-hover table-bordered">
+    <caption>
+            <p ng-show="(showSizeSelector === '1')">
+                <button class="mage-btn btn" ng-class="gridSize == '-1' ? 'btn-default' : 'btn-primary'" ng-click="setSize(-1)">Show All</button>
+                <button class="mage-btn btn" ng-class="gridSize == '5' ? 'btn-default' : 'btn-primary'" ng-click="setSize(5)">Show First 5</button>
+            </p>
+
+                <button class="mage-btn btn btn-outline" ng-class="period == 'month' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('month')">Month</button>   
+                <button class="mage-btn btn btn-outline" ng-class="period == 'quater' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('quater')">Quarter</button>  
+                <button class="mage-btn btn btn-outline" ng-class="period == 'year' ? 'btn-default' : 'btn-primary'" ng-click="setTeamsPeriod('year')">Year</button>
+ 
+            <div ng-show="(showSelect === '1' && period != 'all')" style="float:right">
+                <select name="select" value="{{selectedPeriod}}" class="input-xlarge" ng-model="selectedPeriod" ng-change="setTeamsPeriodSelect(period, aliasName)">
+                    <option ng-repeat="periodElement in periods" value="{{periodElement.alias}}">{{periodElement.label}}</option> 
+                </select>   
+            </div>  
+            <div class="btn-group" ng-if="(showButton === '1' && period != 'all')">
+                <button class="mage-btn btn btn-default" id="current-period}}">{{periodLabel}}</button>
+                <button class="mage-btn btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                <ul class="dropdown-menu" id="{{period}}-menu">
+                    <li ng-repeat="periodElement in periods">
+                        <a class="dropdown-item" ng-click="setTeamsPeriodElement(period, periodElement.alias)">{{periodElement.label}}</a>
+                    </li>
+                </ul>
+            </div>
+    </caption>
+                
+    <thead>
+        <tr>
+            <th ng-repeat="label in labelsTeam">{{label}}</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr ng-repeat="team in teamInfo" >
+                <td>
+                    <a href="{{team.link}}"!>{{team.name}}</a>
+                </td>
+                <td>{{team.prsNumberTotal}}</td>
+                <td>{{team.prsNumberAccepted}}</td>
+                <td>{{team.prsNumberPartner}}</td>
+                <td>{{team.prsNumberOSS}}</td>
+            </tr>
+            <tr ng-if="gridSize == -1">
+                <td><h4>{{teamInfo.totals.members}} members in {{teamInfo.totals.teams}} teams</h4></td>
+                <td><h4>{{teamInfo.totals.prs}}</h4></td>
+                <td><h4>{{teamInfo.totals.prsAccepted}}</h4></td>
+                <td><h4>{{teamInfo.totals.commercePRs}}</h4></td>
+                <td><h4>{{teamInfo.totals.ossPRs}}</h4></td>
+            </tr>
+    </tbody>
+</table>

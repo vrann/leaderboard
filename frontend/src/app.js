@@ -16,6 +16,7 @@ import "./../less/typography.less"
 import "./../less/universal.less"
 import "./../less/partners.less"
 
+
 //import "bootstrap/js/modal.js"
 
 //import teamsLoaderFactory from "./teamsLoader.js"
@@ -27,7 +28,7 @@ import teamsRendererFactory from "./teamsRenderer.js"
 var app = angular.module('gitStatUI', ['ui.bootstrap']);
 //var esEndpoint = 'http://127.0.0.1:9200/'
 var esEndpoint = 'https://search-magento-partners-kxrre3hdvezhngpgs7myrcmr7a.us-east-1.es.amazonaws.com'
-
+var EsBuilder = require('./esBuilder')
 
 //app.teams = getCommerceStatisticData();
 
@@ -130,7 +131,7 @@ app.directive('openSourceElement', function () {
 
 app.controller('TeamsController', ['$scope', '$http', function ($scope, $http) {
 
-    $http.get('https://s3.amazonaws.com/public.magento.com/partners.leaderboard-monthly.js').then(response => {
+    $http.get('https://s3.amazonaws.com/public.magento.com/partners.leaderboard.js').then(response => {
         // if (!$scope.$parent.hasOwnProperty('data')) {
         //     $scope.$parent['data'] = {}
         // }
@@ -139,9 +140,9 @@ app.controller('TeamsController', ['$scope', '$http', function ($scope, $http) {
         //     $scope.data = {}
         //     $scope.data[$scope.aliasName] = data[$scope.aliasName];
         // });
-        console.log('Response')
+        //console.log('Response')
         $scope.setTeamsPeriodSelect = function(period, alias) {
-            console.log(period, alias)
+            //console.log(period, alias)
             //console.log(period, alias, $scope.data[alias].selectedPeriod)
             $scope.currentPeriod = $scope.selectedPeriod
             //console.log($scope.$parent.currentPeriod)
@@ -150,35 +151,35 @@ app.controller('TeamsController', ['$scope', '$http', function ($scope, $http) {
 
             //$scope.$parent.data[alias].selectedPeriod = $scope.$parent.data[alias].currentPeriod
             //console.log($scope.$parent.data[alias].selectedPeriod, $scope.$parent.data[alias].currentPeriod, $scope.$parent.data)
-            console.log($scope)
+            //console.log($scope)
         }
 
         
-        console.log($scope)
+        //console.log($scope)
         $scope.response = response
         //$scope.aliases.map(alias => {
             var period = $scope.elementPeriod ? $scope.elementPeriod : 'all'
-            console.log(period)
+            //console.log(period)
             var currentPeriod = 'all'
             //$scope['currentPeriod'] = currentPeriod;
-            console.log(currentPeriod)
+            //console.log(currentPeriod)
             if ($scope['gridSize'] == undefined) {
                 $scope['gridSize'] = -1;
             }
             teamsRendererFactory($scope).renderTeams(response.data, period, 'all', $scope.gridSize)    
             
             $scope.setTeamsPeriod = function(period, alias) {
-                console.log(period, 'all')
+                //console.log(period, 'all')
                 teamsRendererFactory($scope).renderTeams(response.data, period, 'all', $scope.gridSize)
             }
 
             $scope.setTeamsPeriodElement = function(period, currentPeriod) {
-                console.log(period, currentPeriod, $scope.currentPeriod)
+                //console.log(period, currentPeriod, $scope.currentPeriod)
                 teamsRendererFactory($scope).renderTeams(response.data, period, currentPeriod, $scope.gridSize)
                 $scope.selectedPeriod = $scope.currentPeriod
             }
             $scope.setSize = function(size) {
-                console.log(size)
+                //console.log(size)
                 $scope.gridSize = size;
                 teamsRendererFactory($scope).renderTeams(response.data, period, currentPeriod, size)
             }
@@ -188,7 +189,7 @@ app.controller('TeamsController', ['$scope', '$http', function ($scope, $http) {
         
         
         
-        console.log($scope)
+        //console.log($scope)
       }).catch(e => {console.log('Error:', e)})
 }]);
 
@@ -196,7 +197,7 @@ app.controller('OpenSourceController', ['$scope', '$http', function ($scope, $ht
     $http.get('https://s3.amazonaws.com/public.magento.com/leadersboard.js').then(response => {
         
         var structure = response.data;
-        console.log(structure)
+        //console.log(structure)
         $scope.types = Object.keys(structure);
         var type = $scope.types[0]
         $scope.data = {}
@@ -234,4 +235,35 @@ app.controller('OpenSourceController', ['$scope', '$http', function ($scope, $ht
         }
     }).catch(console.log)
     
+}]);
+
+
+var prsTemplateUrl = require('ngtemplate-loader!html-loader!./widgets/prs.html');
+
+app.directive('prsElement', function () {
+    return {
+        templateUrl: prsTemplateUrl,
+
+        link: function($scope, element, attributes) {
+        }
+    }
+});  
+
+app.controller('PRsController', ['$scope', function ($scope) {
+    var client = EsBuilder(esEndpoint)
+    client.loadData({
+        index: 'github-prs',
+        type: 'github-pr',
+        size: 1000,
+        body: {
+            "query":{"term":{"state": "open"}}
+        }    
+    }, response => {
+        $scope.$apply(function() {
+            $scope.prs = response.hits.hits;
+        })
+        console.log($scope);
+    }, hitsTotal => {
+        return false;
+    })
 }]);

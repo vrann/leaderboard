@@ -1,0 +1,43 @@
+<script type="text/javascript" src="https://s3.amazonaws.com/partners-stat/js/output.bfd2171a5e7dda535455.bundle.js"></script>
+<h3>Partners Teams</h3>
+<p ng-app="gitStatUI">
+	<div class="field field-name-body field-type-text-with-summary field-label-hidden">
+		<div class="field-items">
+			<div class="field-item even" ng-controller="TeamsController">
+				<table class="table table-hover table-bordered">
+					<thead>
+						<tr>
+							<th ng-repeat="label in labelsTeam">{{label}}</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="team in teamInfo">
+							<td>{{team.name}}</td>
+							<td>{{team.membersNumber}}</td>
+							<td>{{team.prsNumberTotal}}</td>
+							<td>{{team.prsNumberTotal}}</td>
+							<td>{{team.prsNumberPartner}}</td>
+							<td>{{team.prsNumberOSS}}</td>
+							<td>
+							<div ng-repeat="complexityLabel in team.complexity">
+							<p class="label" style="background-color: #{{complexityLabel.color}}; color: #fff;" title="Label: {{complexityLabel.name}}"><span class="labels">{{complexityLabel.name}}: {{complexityLabel.count}}</span></p>
+							</div>
+							</td>
+							<td>
+							<div ng-repeat="achievemntLabel in team.achievement">
+							<p class="label" style="background-color: #{{achievemntLabel.color}}; color: #fff;" title="Label: {{achievemntLabel.name}}"><span class="labels">{{achievemntLabel.name}}: {{achievemntLabel.count}}</span></p>
+							</div>
+							</td>
+							<td>
+							<div ng-repeat="categoryLabel in team.expertise">
+							<p class="label" style="background-color: #{{categoryLabel.color}}; color: #fff;" title="Label: {{categoryLabel.name}}"><span class="labels">{{categoryLabel.name}}: {{categoryLabel.count}}</span></p>
+							</div>
+							</td>
+							<td>{{team.points}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</p>
