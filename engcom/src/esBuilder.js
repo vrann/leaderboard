@@ -35,7 +35,7 @@ module.exports = EsBuilder
                         }
                     }, callback, shouldScroll)
                 } else {
-                    return new Promise(function(resolve, reject) {resolve("Finished")});
+                    return new Promise(function(resolve, reject) {resolve("Fin")});
                 }
             }
         )

@@ -23,8 +23,8 @@ import teamsRendererFactory from "./teamsRenderer.js"
 
 'use strict';
 var app = angular.module('gitStatUI', ['ui.bootstrap', "chart.js"]);
-var esEndpoint = 'http://localhost:9200' 
-//var esEndpoint = 'https://search-magento-partners-kxrre3hdvezhngpgs7myrcmr7a.us-east-1.es.amazonaws.com'
+//var esEndpoint = 'http://localhost:9200' 
+var esEndpoint = 'https://search-magento-partners-kxrre3hdvezhngpgs7myrcmr7a.us-east-1.es.amazonaws.com'
 
 
 var client = EsBuilder(esEndpoint)
@@ -275,7 +275,6 @@ app.controller('TeamsController', ['$scope', '$http', 'TeamDataFactory', functio
         $scope['gridSize'] = -1;
     }
     TeamDataFactory.getTeams(period, 'all', $scope['gridSize']).then(response => {
-        console.log('resolved!', response)
         $scope.$apply(() => {
             Object.keys(response).map(key => {
                 $scope[key] = response[key];
@@ -438,42 +437,9 @@ app.directive('statisticElement', function () {
 
 app.controller('EngcomController', ['$scope', '$attrs', function ($scope, $attrs) {
     prsLoader.getPrsStatistic($attrs.repositories.split(';')).then(response => {
-        //console.log('resolved!', response)
+        console.log($attrs.repositories, response)
 
-        $scope.$apply(() => {
-
-            // $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-            // $scope.series = ['Series A', 'Series B'];
-            // $scope.data = [
-            //   [65, 59, 80, 81, 56, 55, 40],
-            //   [28, 48, 40, 19, 86, 27, 90]
-            // ];
-            // $scope.onClick = function (points, evt) {
-            //   console.log(points, evt);
-            // };
-            // $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-            // $scope.options = {
-            //   scales: {
-            //     yAxes: [
-            //       {
-            //         id: 'y-axis-1',
-            //         type: 'linear',
-            //         display: true,
-            //         position: 'left'
-            //       },
-            //       {
-            //         id: 'y-axis-2',
-            //         type: 'linear',
-            //         display: true,
-            //         position: 'right'
-            //       }
-            //     ]
-            //   }
-            // };
-        //});    
-
-
-            
+        $scope.$apply(() => {  
             var printCounts = function(countsObject, range) {
                 var values = []
                 range.map(function(month) {
@@ -505,18 +471,8 @@ app.controller('EngcomController', ['$scope', '$attrs', function ($scope, $attrs
             $scope.data.push(printElements($scope.processed, $scope.range))
             $scope.data.push(printElements($scope.outstanding, $scope.range))
 
-            //$scope.colors = ["rgba(159,204,0,0.5)","rgba(250,109,33,0.7)","#000000"];
             $scope.options = {
 
-                      elements: {
-                        // line: {
-                        //   borderWidth: 2,
-                        //   fill: false
-                        // },
-                        // point: {
-                        //   radius: 10
-                        // }
-                      },
                       scales: {
                         yAxes: [{
                             ticks: {

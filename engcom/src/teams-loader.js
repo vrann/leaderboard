@@ -40,7 +40,6 @@ var teamsLoaderFactory = function(client) {
         },
         membersExclude: {},
         getTeams: function() {
-            console.log('started');
             return new Promise((resolve, reject) => {
                 return client.loadData({
                     index: 'github-teams',
@@ -50,20 +49,16 @@ var teamsLoaderFactory = function(client) {
                         "query":{"match_all":{}}
                     }    
                 }, response => {
-                    console.log('teams loaded');
                         try {
                             response.hits.hits.forEach(
                                 hit => {
                                     this.teamsCount++
                                     team = hit._source
-                                    //console.log(team.organization)
                                     if (!team.hasOwnProperty('organization') || team.organization.login !== 'magento-partners') {
                                         return;
                                     }
-                                    //console.log(team)
 
                                     function reshapeTeam() {
-                                        //console.log(this)
                                         return {
                                             membersData: {},
                                             prs: {},
@@ -103,7 +98,6 @@ var teamsLoaderFactory = function(client) {
             .then(result => {
                 return new Promise((resolve, reject) => {
                     try {
-                        //console.log(this.membersIds)
                         return client.loadData({
                             index: 'github-members',
                             type: 'github-member',
@@ -114,7 +108,6 @@ var teamsLoaderFactory = function(client) {
                                 }
                             }    
                         }, response => {
-                            //console.log('members loaded');
                                 try {
                                     response.hits.hits.forEach(
                                         hit => {
@@ -268,7 +261,6 @@ var teamsLoaderFactory = function(client) {
                     [...Array(chunksNumber).keys()].map(currentChunk => {
                         start = currentChunk * chunkSize
                         slice = this.prsIds.slice(start, start + chunkSize);
-                        console.log('slice', currentChunk, start, start + chunkSize, slice)
                         promises.push(
                             client.loadData({
                                 index: 'github-prs-metadata',
@@ -304,7 +296,6 @@ var teamsLoaderFactory = function(client) {
                     return new Promise((resolve, reject) => {
                         try {
                             Promise.all(promises).then(result => {
-                                console.log(result)
                                 resolve({teams: this.teams, totals: {
                                     teams: Object.keys(this.teams).length,
                                     prs: this.prsCount,
